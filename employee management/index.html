@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Management System</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="dashboard">
+        <header class="header">
+          <div class="header-content">
+            <h1>Employee Management System</h1>
+            <div class="user-info">
+              <span>HR Manager</span>
+            </div>
+          </div>
+        </header>
+
+        <nav class="nav-tabs">
+          <button class="nav-btn active" data-section="employees">
+            Employees
+          </button>
+          <button class="nav-btn" data-section="attendance">
+            Attendance
+          </button>
+          <button class="nav-btn" data-section="leave">
+            Leave Requests
+          </button>
+          <button class="nav-btn" data-section="performance">
+            Performance
+          </button>
+        </nav>
+
+        <main class="main-content">
+        
+          <section id="employees" class="section active">
+            <div class="section-header">
+              <h2>Employee Information</h2>
+              <button id="addEmployeeBtn" class="btn btn-primary">+ Add Employee</button>
+            </div>
+
+      
+            <div id="employeeFormContainer" class="form-container hidden">
+              <form id="employeeForm" class="form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="empId">Employee ID</label>
+                    <input type="text" id="empId" placeholder="AUTO-001" disabled>
+                  </div>
+                  <div class="form-group">
+                    <label for="empName">Full Name</label>
+                    <input type="text" id="empName" placeholder="John Doe" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="empEmail">Email</label>
+                    <input type="email" id="empEmail" placeholder="john@company.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="empPhone">Phone</label>
+                    <input type="tel" id="empPhone" placeholder="+1 (555) 000-0000">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="empDept">Department</label>
+                    <select id="empDept" required>
+                      <option value="">Select Department</option>
+                      <option value="HR">Human Resources</option>
+                      <option value="IT">Information Technology</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Finance">Finance</option>
+                      <option value="Operations">Operations</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="empPosition">Position</label>
+                    <input type="text" id="empPosition" placeholder="Senior Developer" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="empJoinDate">Join Date</label>
+                    <input type="date" id="empJoinDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="empSalary">Salary</label>
+                    <input type="number" id="empSalary" placeholder="50000" required>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save Employee</button>
+                  <button type="button" class="btn btn-secondary" id="cancelFormBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+          
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="employeeTable">
+                  <tr class="empty-row">
+                    <td colspan="7">No employees yet. Click "Add Employee" to get started.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          
+          <section id="attendance" class="section">
+            <div class="section-header">
+              <h2>Attendance Management</h2>
+              <button id="markAttendanceBtn" class="btn btn-primary">+ Mark Attendance</button>
+            </div>
+
+      
+            <div id="attendanceFormContainer" class="form-container hidden">
+              <form id="attendanceForm" class="form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="attEmpId">Select Employee</label>
+                    <select id="attEmpId" required>
+                      <option value="">Choose an employee...</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="attDate">Date</label>
+                    <input type="date" id="attDate" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="attStatus">Status</label>
+                    <select id="attStatus" required>
+                      <option value="">Select Status</option>
+                      <option value="Present">Present</option>
+                      <option value="Absent">Absent</option>
+                      <option value="Late">Late</option>
+                      <option value="Half Day">Half Day</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="attRemarks">Remarks</label>
+                    <input type="text" id="attRemarks" placeholder="Optional remarks">
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Mark Attendance</button>
+                  <button type="button" class="btn btn-secondary" id="cancelAttBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceTable">
+                  <tr class="empty-row">
+                    <td colspan="5">No attendance records. Mark attendance to get started.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="summary-cards">
+              <div class="summary-card">
+                <div class="summary-label">Total Present</div>
+                <div class="summary-value" id="totalPresent">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Total Absent</div>
+                <div class="summary-value" id="totalAbsent">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Total Late</div>
+                <div class="summary-value" id="totalLate">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Attendance Rate</div>
+                <div class="summary-value" id="attendanceRate">0%</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="leave" class="section">
+            <div class="section-header">
+              <h2>Leave Requests</h2>
+              <button id="requestLeaveBtn" class="btn btn-primary">+ Request Leave</button>
+            </div>
+
+            <div id="leaveFormContainer" class="form-container hidden">
+              <form id="leaveForm" class="form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="leaveEmpId">Select Employee</label>
+                    <select id="leaveEmpId" required>
+                      <option value="">Choose an employee...</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="leaveType">Leave Type</label>
+                    <select id="leaveType" required>
+                      <option value="">Select Type</option>
+                      <option value="Casual Leave">Casual Leave</option>
+                      <option value="Sick Leave">Sick Leave</option>
+                      <option value="Annual Leave">Annual Leave</option>
+                      <option value="Unpaid Leave">Unpaid Leave</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="leaveStartDate">Start Date</label>
+                    <input type="date" id="leaveStartDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="leaveEndDate">End Date</label>
+                    <input type="date" id="leaveEndDate" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="leaveReason">Reason</label>
+                    <textarea id="leaveReason" placeholder="Please provide reason for leave" rows="3"></textarea>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Submit Request</button>
+                  <button type="button" class="btn btn-secondary" id="cancelLeaveBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+          
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Days</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="leaveTable">
+                  <tr class="empty-row">
+                    <td colspan="7">No leave requests. Submit a request to get started.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <div class="summary-cards">
+              <div class="summary-card">
+                <div class="summary-label">Pending Requests</div>
+                <div class="summary-value" id="pendingLeaves">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Approved</div>
+                <div class="summary-value" id="approvedLeaves">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Rejected</div>
+                <div class="summary-value" id="rejectedLeaves">0</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="performance" class="section">
+            <div class="section-header">
+              <h2>Performance Management</h2>
+              <button id="addPerformanceBtn" class="btn btn-primary">+ Add Review</button>
+            </div>
+
+            <div id="performanceFormContainer" class="form-container hidden">
+              <form id="performanceForm" class="form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="perfEmpId">Select Employee</label>
+                    <select id="perfEmpId" required>
+                      <option value="">Choose an employee...</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="perfPeriod">Review Period</label>
+                    <input type="month" id="perfPeriod" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="perfRating">Performance Rating (1-5)</label>
+                    <select id="perfRating" required>
+                      <option value="">Select Rating</option>
+                      <option value="5">⭐⭐⭐⭐⭐ Excellent (5)</option>
+                      <option value="4">⭐⭐⭐⭐ Very Good (4)</option>
+                      <option value="3">⭐⭐⭐ Good (3)</option>
+                      <option value="2">⭐⭐ Fair (2)</option>
+                      <option value="1">⭐ Needs Improvement (1)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="perfGoalsAchieved">Goals Achieved (%)</label>
+                    <input type="number" id="perfGoalsAchieved" min="0" max="100" placeholder="80" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="perfComments">Comments & Feedback</label>
+                    <textarea id="perfComments" placeholder="Provide detailed feedback" rows="4"></textarea>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save Review</button>
+                  <button type="button" class="btn btn-secondary" id="cancelPerfBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Period</th>
+                    <th>Rating</th>
+                    <th>Goals Achieved</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="performanceTable">
+                  <tr class="empty-row">
+                    <td colspan="6">No performance reviews yet. Add a review to get started.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="summary-cards">
+              <div class="summary-card">
+                <div class="summary-label">Avg Rating</div>
+                <div class="summary-value" id="avgRating">0.0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Top Performers</div>
+                <div class="summary-value" id="topPerformers">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">Need Improvement</div>
+                <div class="summary-value" id="needImprovement">0</div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
